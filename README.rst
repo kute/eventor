@@ -14,21 +14,22 @@
 
 1. 直接传递要处理的任务集合
 
-    >>> elelist = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-    >>> func = lambda x: x + 10
-    >>> e = Eventor(threadcount=3, taskunitcount=3, func=func, interval=1)
-    >>> e.run_with_tasklist(elelist)
-    [11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+    elelist = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    func = lambda x: x + 10
+    e = Eventor(threadcount=3, taskunitcount=3, func=func, interval=1)
+    result = e.run_with_tasklist(elelist)
+    print(result) # [11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+    
     
 上述例子是开启3个线程,将任务(共有10个task)分割为每份3个task执行的, 间隔1s
 
 2. 处理文件和直接传递任务集合类似
 
-    >>> file = "test/data.txt"
-    >>> func = lambda x: int(x) + 10
-    >>> e = Eventor(threadcount=3, taskunitcount=3, func=func, interval=1)
-    >>> e.run_with_file(file)
-    [11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+    file = "test/data.txt"
+    func = lambda x: int(x) + 10
+    e = Eventor(threadcount=3, taskunitcount=3, func=func, interval=1)
+    result = e.run_with_file(file)
+    print(result) # [11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
 
 
 详细例子见 test/unittest.py 
