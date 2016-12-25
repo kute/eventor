@@ -48,9 +48,9 @@ class Eventor(object):
 
     def _run(self, pool, tasklist, async=False):
         if async:
-            pool.map_async(self.func, tasklist)
+            return pool.map_async(self.func, tasklist)
         else:
-            pool.map(self.func, tasklist)
+            return pool.map(self.func, tasklist)
 
     def run_with_tasklist(self, tasklist=None, async=False):
         if not tasklist or len(tasklist) == 0:
@@ -64,15 +64,19 @@ class Eventor(object):
         pool = Pool(threadcount)
         size = len(tasklist)
         total = 0
+        resultlist = []
         if size <= taskunitcount:
-            self._run(pool, tasklist, async)
+            result = self._run(pool, tasklist, async)
+            resultlist.extend(result)
             print("finished {} total tasks".format(size))
         else:
             for slicelist in self._slice_list_by_size(tasklist, taskunitcount):
-                self._run(pool, slicelist, async)
+                result = self._run(pool, slicelist, async)
+                resultlist.extend(result)
                 total += len(slicelist)
                 time.sleep(self.interval)
             print("finished {} total tasks".format(total))
+        return resultlist
 
     def run_with_file(self, file=None, async=False):
         if not os.path.exists(file) or not os.path.isfile(file):
@@ -84,26 +88,32 @@ class Eventor(object):
         pool = Pool(threadcount)
         plist = []
         total = 0
+        resultlist = []
         with open(file, "r") as f:
             for line in f:
                 plist.append(line.strip())
                 if len(plist) >= taskunitcount:
-                    self._run(pool, plist, async)
+                    result = self._run(pool, plist, async)
+                    resultlist.extend(result)
                     total += len(plist)
                     plist.clear()
                     time.sleep(self.interval)
             if len(plist) > 0:
-                pool.map(self.func, plist)
+                result = pool.map(self.func, plist)
+                resultlist.extend(result)
                 total += len(plist)
                 plist.clear()
             print("finished {} total tasks".format(total))
+        return resultlist
 
 
 def main():
     a = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     # e = Eventor(threadcount=3, taskunitcount=3, func=a)
-    e = Eventor(threadcount=3, taskunitcount=3, func=lambda x: print("sdf:{}".format(x)))
-    e.run_with_tasklist(a, False)
+    e = Eventor(threadcount=3, taskunitcount=3, func=lambda x: "sdf:{}".format(x))
+    result = e.run_with_tasklist(a, False)
+    print(result)
+    print(attr.__version__)
 
 
 if __name__ == '__main__':
