@@ -9,7 +9,7 @@
 """
 
 import unittest
-from core.eventor import Eventor
+from eventor.core import Eventor
 
 
 class SimpleTest(unittest.TestCase):

@@ -5,7 +5,7 @@ from os.path import dirname, join
 from setuptools import setup, find_packages
 
 
-with open(join(dirname(__file__), 'core/VERSION'), 'rb') as f:
+with open(join(dirname(__file__), 'eventor/VERSION'), 'rb') as f:
     version = f.read().decode('ascii').strip()
 
 required = [

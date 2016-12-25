@@ -8,7 +8,7 @@
 
 """
 
-from .eventor import Eventor
+from .core import Eventor
 
 
 def main():
