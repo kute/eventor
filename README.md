@@ -14,6 +14,7 @@
 
 直接传递要处理的任务集合
 
+    from eventor import Eventor
     elelist = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     func = lambda x: x + 10
     e = Eventor(threadcount=3, taskunitcount=3, func=func, interval=1)
@@ -25,6 +26,7 @@
 
 处理文件和直接传递任务集合类似
 
+    from eventor import Eventor
     file = "test/data.txt"
     func = lambda x: int(x) + 10
     e = Eventor(threadcount=3, taskunitcount=3, func=func, interval=1)
