@@ -9,9 +9,9 @@ with open(join(dirname(__file__), 'eventor/VERSION'), 'rb') as f:
     version = f.read().decode('ascii').strip()
 
 required = [
-    "gevent==1.1.2",
-    "greenlet==0.4.10",
-    "attrs==16.2.0"
+    "gevent>=1.1.2",
+    "greenlet>=0.4.10",
+    "attrs>=16.2.0"
 ]
 
 setup(
