@@ -17,7 +17,7 @@ import multiprocessing
 @attr.s
 class ProcessCreator(object):
 
-    processcount = attr.ib(default=10, convert=int)
+    processcount = attr.ib(default=multiprocessing.cpu_count(), convert=int)
     async = attr.ib(default=False, convert=bool)
 
     def run_multi_consumer(self, consumerfunc=None, initializer=None, aftercallback=None,
