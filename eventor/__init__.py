@@ -9,6 +9,7 @@
 """
 
 from .core import Eventor
+from .processcore import start_multi_consumer
 
 
 def main():
