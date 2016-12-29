@@ -105,16 +105,3 @@ class Eventor(object):
                 plist.clear()
             print("finished {} total tasks".format(total))
         return resultlist
-
-
-def main():
-    a = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-    # e = Eventor(threadcount=3, taskunitcount=3, func=a)
-    e = Eventor(threadcount=3, taskunitcount=3, func=lambda x: "sdf:{}".format(x))
-    result = e.run_with_tasklist(a, False)
-    print(result)
-    print(attr.__version__)
-
-
-if __name__ == '__main__':
-    main()

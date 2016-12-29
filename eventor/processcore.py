@@ -62,22 +62,3 @@ def start_multi_consumer(consumercount=multiprocessing.cpu_count(), iterable=Non
     creator = ProcessCreator(processcount=consumercount, async=async)
     result = creator.run_multi_consumer(consumer_func, beforecallback, aftercallback, errorcallback, sharequeue, timeout)
     return result
-
-
-def confunc(data):
-    print("process[{}] deal with {}".format(multiprocessing.current_process().name, data))
-    return data
-
-
-def process_callback(data):
-    print("===={}".format(data))
-
-
-def main():
-    datalist = [1, 2, 5, 3, 6, 8, 23, 'data', 232]
-    resutl = start_multi_consumer(consumercount=4, iterable=datalist, consumer_func=confunc)
-    print(resutl)
-
-
-if __name__ == '__main__':
-    main()
