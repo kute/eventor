@@ -65,7 +65,6 @@ exmaple-3: 开启 4 个进程, 每个进程打印 当前进程名以及准备消
     process[ForkPoolWorker-3] deal with 232
 
 
-详细例子见 test/unittest.py 
 
 Very stupid!
 
