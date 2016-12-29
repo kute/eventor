@@ -3,14 +3,14 @@
 
 # description
 
-1. Eventor类,初始化参数如下:
+1.Eventor类,初始化参数如下:
 - threadcount: 开启多少个线程 
 - taskunitcount: 每个线程处理多少任务
 - func: 实际的处理任务的函数, 自己实现
 - interval: 线程间隔
 - async: 同步异步
 
-2. start_multi_consumer方法, 场景:模拟多个消费者(进程) 消费共享资源, 参数如下:
+2.start_multi_consumer方法, 场景:模拟多个消费者(进程) 消费共享资源, 参数如下:
 - consumercount: 开启的消费者(进程)个数,默认 cput_count()
 - iterable=None: 共享资源
 - consumer_func=None: 具体的消费行为
