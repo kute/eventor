@@ -52,13 +52,15 @@ class Eventor(object):
         else:
             return pool.map(self.func, tasklist)
 
-    def run_with_tasklist(self, tasklist=None, async=False):
+    def run_with_tasklist(self, tasklist=None, async=False, timeout=None):
         if not tasklist or len(tasklist) == 0:
             raise ValueError("parameters tasklist null value")
         if not isinstance(tasklist, list):
             raise ValueError("parameters tasklist wrong type, should be list, not {}".format(tasklist.__class__.__name__))
         if not callable(self.func):
             raise ValueError("func is illegal function")
+        if async and timeout is None:
+            raise ValueError("timeout should be seted if special async=True")
         threadcount = self.threadcount or cpu_count() * 5
         taskunitcount = self.taskunitcount or 100
         pool = Pool(threadcount)
@@ -67,22 +69,25 @@ class Eventor(object):
         resultlist = []
         if size <= taskunitcount:
             result = self._run(pool, tasklist, async)
-            resultlist.extend(result)
+            resultlist.extend(result.get(timeout) if async else result)
             print("finished {} total tasks".format(size))
         else:
             for slicelist in self._slice_list_by_size(tasklist, taskunitcount):
                 result = self._run(pool, slicelist, async)
-                resultlist.extend(result)
+                resultlist.extend(result.get(timeout) if async else result)
                 total += len(slicelist)
                 time.sleep(self.interval)
             print("finished {} total tasks".format(total))
+        pool.join()
         return resultlist
 
-    def run_with_file(self, file=None, async=False):
+    def run_with_file(self, file=None, async=False, timeout=None):
         if not os.path.exists(file) or not os.path.isfile(file):
             raise ValueError("wrong file or not exists")
         if not callable(self.func):
             raise ValueError("func is illegal function")
+        if async and timeout is None:
+            raise ValueError("timeout should be seted if special async=True")
         threadcount = self.threadcount or cpu_count() * 5
         taskunitcount = self.taskunitcount or 100
         pool = Pool(threadcount)
@@ -94,14 +99,15 @@ class Eventor(object):
                 plist.append(line.strip())
                 if len(plist) >= taskunitcount:
                     result = self._run(pool, plist, async)
-                    resultlist.extend(result)
+                    resultlist.extend(result.get(timeout) if async else result)
                     total += len(plist)
                     plist.clear()
                     time.sleep(self.interval)
             if len(plist) > 0:
-                result = pool.map(self.func, plist)
-                resultlist.extend(result)
+                result = self._run(pool, plist, async)
+                resultlist.extend(result.get(timeout) if async else result)
                 total += len(plist)
                 plist.clear()
             print("finished {} total tasks".format(total))
+        pool.join()
         return resultlist
