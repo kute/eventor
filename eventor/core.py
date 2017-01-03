@@ -8,13 +8,11 @@
 
 多线程,协称 执行器
 """
-
-from gevent import monkey
-from gevent.pool import Pool
-from multiprocessing import cpu_count
-import time
 import os
 import attr
+import gevent
+from gevent import monkey
+from gevent.pool import Pool
 
 
 monkey.patch_all()
@@ -30,7 +28,7 @@ class Eventor(object):
 
     func = attr.ib(validator=valide_func)
     taskunitcount = attr.ib(default=100, convert=int)
-    threadcount = attr.ib(default=cpu_count() * 5, convert=int)
+    threadcount = attr.ib(default=os.cpu_count() * 5, convert=int)
     interval = attr.ib(default=0, convert=int)
 
     def _slice_list_by_size(self, tasklist, slicesize):
@@ -61,7 +59,7 @@ class Eventor(object):
             raise ValueError("func is illegal function")
         if async and timeout is None:
             raise ValueError("timeout should be seted if special async=True")
-        threadcount = self.threadcount or cpu_count() * 5
+        threadcount = self.threadcount or os.cpu_count() * 5
         taskunitcount = self.taskunitcount or 100
         pool = Pool(threadcount)
         size = len(tasklist)
@@ -76,7 +74,7 @@ class Eventor(object):
                 result = self._run(pool, slicelist, async)
                 resultlist.extend(result.get(timeout) if async else result)
                 total += len(slicelist)
-                time.sleep(self.interval)
+                gevent.sleep(self.interval)
             print("finished {} total tasks".format(total))
         pool.join()
         return resultlist
@@ -88,7 +86,7 @@ class Eventor(object):
             raise ValueError("func is illegal function")
         if async and timeout is None:
             raise ValueError("timeout should be seted if special async=True")
-        threadcount = self.threadcount or cpu_count() * 5
+        threadcount = self.threadcount or os.cpu_count() * 5
         taskunitcount = self.taskunitcount or 100
         pool = Pool(threadcount)
         plist = []
@@ -102,7 +100,7 @@ class Eventor(object):
                     resultlist.extend(result.get(timeout) if async else result)
                     total += len(plist)
                     plist.clear()
-                    time.sleep(self.interval)
+                    gevent.sleep(self.interval)
             if len(plist) > 0:
                 result = self._run(pool, plist, async)
                 resultlist.extend(result.get(timeout) if async else result)

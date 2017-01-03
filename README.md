@@ -45,7 +45,8 @@ exmaple-2: 处理文件和直接传递任务集合类似
     >>> print(result)
     [11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
 
-exmaple-3: 开启 4 个进程, 每个进程打印 当前进程名以及准备消费的 数据
+exmaple-3: 开启 4 个进程, 每个进程打印 当前进程名以及准备消费的 共享数据
+(在处理稍微比较繁琐的任务时, 可以和上面结合, 也就是 `多进程 + 协程`, 这样既能利用多核, 又能利用协程高效执行)
 
     >>> from multiprocessing import cpu_count
     >>> from eventor import start_multi_consumer
