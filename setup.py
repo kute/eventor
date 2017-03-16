@@ -18,7 +18,7 @@ setup(
     name='eventor',
     version=version,
     description='Simple API for multi thread or process or Coroutine executor for tasks.',
-    long_description=open('README.md').read(),
+    long_description=open('README.md', encoding='utf-8').read(),
     author='kute',
     author_email='kutekute00@gmail.com',
     url='https://github.com/kute/eventor',
