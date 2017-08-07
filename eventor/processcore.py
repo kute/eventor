@@ -46,7 +46,7 @@ class ProcessCreator(object):
     def _valid_func(self, funclist=None):
         for func in funclist:
             if func and not callable(func):
-                raise TypeError("func[{}] is not callable.".format(func.__class__.__name__))
+                raise TypeError("Func[{}] is not callable.".format(func.__class__.__name__))
 
 
 def start_multi_consumer(consumercount=multiprocessing.cpu_count(), iterable=None, consumer_func=None, beforecallback=None,
