@@ -31,7 +31,6 @@ class SimpleTest(unittest.TestCase):
         times = 2
         elelist = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
-        e = EventorUtil()
         file = "../resources/data.txt"
 
         print(file)
