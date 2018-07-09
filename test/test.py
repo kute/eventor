@@ -32,7 +32,9 @@ class SimpleTest(unittest.TestCase):
         elelist = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
         e = EventorUtil()
-        file = os.path.join(e.get_dir(".."), "data.txt")
+        file = os.path.join(e.get_dir(relative=".."), "data.txt")
+
+        print(file)
 
         def func(x):
             return int(x) + times
