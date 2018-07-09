@@ -8,6 +8,7 @@
 
 """
 
+# from __future__ import absolute_import
 import unittest
 from eventor.core import Eventor
 from eventor.util import EventorUtil

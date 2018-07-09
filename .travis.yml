@@ -1,7 +1,11 @@
 language: python
 python:
   - "3.5"
+  - "3.6"
 install:
+  - git clone https://github.com/kute/eventor eventor
+  - cd eventor
+  - python3 setup.py install
   - pip3 install -r requirements.txt
 script:
   - cd test
