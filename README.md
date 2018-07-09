@@ -1,4 +1,4 @@
-# eventor
+# eventor [![Build Status](https://www.travis-ci.org/kute/eventor.svg?branch=master)](https://www.travis-ci.org/kute/eventor) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/kuteforwhy/forwhy)
 
 使用多线程,进程以及协程实现的任务执行器,加快任务执行（针对IO密集型任务）
 
