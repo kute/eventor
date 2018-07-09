@@ -1,0 +1,16 @@
+language: python
+python:
+  - "3.5"
+install:
+  - pip3 install -r requirements.txt
+script:
+  - py.test
+branches:
+  only:
+  - master
+notifications:
+  email:
+      recipients:
+        - kutekute00@gmail.com
+      on_success: never
+      on_failure: always
